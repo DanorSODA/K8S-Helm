@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service  # Name of the service for PostgreSQL.
+  labels:
+    app: postgres  # Label to identify the service related to PostgreSQL.
+spec:
+  type: ClusterIP  # The service is only accessible within the cluster.
+  ports:
+  - port: 5432  # Port exposed by the PostgreSQL container.
+    targetPort: 5432  # The port on which the PostgreSQL container listens.
+  selector:
+    app: postgres  # Pods with this label will be targeted by this service.

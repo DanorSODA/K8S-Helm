@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres  # Name of the deployment.
+  labels:
+    app: postgres  # Labels used to identify and select this deployment.
+spec:
+  replicas: 1  # Number of PostgreSQL pod replicas to run.
+  selector:
+    matchLabels:
+      app: postgres  # Ensures that the Deployment selects pods with this label.
+  template:
+    metadata:
+      labels:
+        app: postgres  # Label assigned to each PostgreSQL pod.
+    spec:
+      containers:
+      - name: postgres  # Name of the PostgreSQL container.
+        image: postgres:13  # Specifies the PostgreSQL container image and version.
+        env:
+        - name: POSTGRES_DB
+          value: detailsdb  # The name of the PostgreSQL database to be created.
+        - name: POSTGRES_USER
+          value: user  # The PostgreSQL user.
+        - name: POSTGRES_PASSWORD
+          value: password  # The password for the PostgreSQL user.
+        volumeMounts:
+        - name: postgres-storage  # Name of the volume for PostgreSQL storage.
+          mountPath: /var/lib/postgresql/data  # Directory inside the container where the volume is mounted.
+      volumes:
+      - name: postgres-storage  # Refers to a PersistentVolumeClaim for persistent storage.
+        persistentVolumeClaim:
+          claimName: postgres-pvc  # Name of the PVC that will provide persistent storage.

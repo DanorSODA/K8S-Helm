@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: details-app-service  # Name of the service for the details-app.
+  labels:
+    app: details-app  # Label to identify the service related to details-app.
+spec:
+  type: ClusterIP  # The service is only accessible within the cluster.
+  ports:
+  - port: 8080  # Port exposed by the service for details-app.
+    targetPort: 8080  # The port on which the details-app container listens.
+  selector:
+    app: details-app  # Pods with this label will be targeted by this service.
