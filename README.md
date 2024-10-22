@@ -22,5 +22,5 @@ curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 ```
 
 - [Install the details-app chart](INSTALL.md)
-- [Contributing Guide](CONTRIBUTIONS.md)
-- [Task file](TASKS.md)
+- [Contributing](CONTRIBUTIONS.md)
+- [Tasks file](TASKS.md)
