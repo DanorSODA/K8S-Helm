@@ -22,26 +22,33 @@ docker push <your-dockerhub-username>/details-app:latest
 
 Make sure to update the values.yaml file to reflect your Docker image repository and tag.
 
-### Step 3: Configure the values.yaml
+### Step 3: Configure the values.yaml (Optional)
 
 Open the values.yaml file to configure the application as needed:
 
-   - Image: Make sure the repository and tag fields under image point to your Docker image.
-   - PostgreSQL PersistentVolumeClaim: Ensure the PVC names are unique if required.
-   - Service Type: By default, the service type is ClusterIP.
+- Image: Make sure the repository and tag fields under image point to your Docker image.
+- PostgreSQL PersistentVolumeClaim: Ensure the PVC names are unique if required.
+- Service Type: By default, the service type is ClusterIP.
 
-### Step 4: Deploy the Helm Chart
+### Step 4: Run the Installation Script
 
-Use Helm to install the chart into your Kubernetes cluster. Replace details-app with the name of your release:
-
-```sh
-helm install details-app ./details-app
-```
-
-Verify that the deployment is successful by checking the pods and services:
+Use the provided install.sh script to install the Helm chart. This script automatically sets the namespace and Docker repository for the deployment.
 
 ```sh
-kubectl get pods
-kubectl get svc
+./install.sh
 ```
 
+If you need to specify a different namespace, pass it as an argument:
+
+```sh
+./install.sh custom-namespace
+```
+
+### Step 5: Verify Deployment
+
+Check that the deployment was successful by viewing the pods and services in the namespace:
+
+```sh
+kubectl get pods -n details-app-namespace
+kubectl get svc -n details-app-namespace
+```
