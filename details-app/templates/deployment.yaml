@@ -1,21 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: details-app  # Name of the deployment.
+  name: { { .Values.name } }
   labels:
-    app: details-app  # Labels used to identify and select this deployment.
+    app: { { .Values.app } }
 spec:
-  replicas: 2  # Specifies the number of pod replicas to run.
+  replicas: { { .Values.replicaCount } } # Specifies the number of pod replicas to run from the values.yaml file.
   selector:
     matchLabels:
-      app: details-app  # Ensures that the Deployment selects pods with this label.
+      app: { { .Values.app } } # Ensures that the Deployment selects pods with this label.
   template:
     metadata:
       labels:
-        app: details-app  # The label assigned to each pod created by this deployment.
+        app: { { .Values.app } } # The label assigned to each pod created by this deployment.
     spec:
       containers:
-      - name: details-app  # Name of the container.
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"  # Container image, referencing the Helm values.yaml.
-        ports:
-        - containerPort: 8080  # The port on which the container listens for requests.
+        - name: { { .Values.name } } # Name of the container.
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" # Container image, referencing the Helm values.yaml.
+          imagePullPolicy: { { .Values.image.pullPolicy } }
+          ports:
+            - containerPort: { { .Values.service.port } } # The port on which the container listens for requests.

@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: postgres-pvc  # Name of the PVC for PostgreSQL storage.
+  name: { { .Values.postgres.pvcName } } # Name of the PVC for PostgreSQL storage.
   labels:
-    app: postgres  # Label to identify the PVC related to PostgreSQL.
+    app: { { .Values.postgres.app } } # Label to identify the PVC related to PostgreSQL.
 spec:
   accessModes:
-    - ReadWriteOnce  # The volume can be mounted as read-write by a single node.
+    - ReadWriteOnce # The volume can be mounted as read-write by a single node.
   resources:
     requests:
-      storage: 1Gi
+      storage: { { .Values.postgres.storage.size } }

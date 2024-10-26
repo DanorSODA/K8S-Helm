@@ -1,17 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: details-app-ingress  # Name of the Ingress resource.
+  name: {{ .Values.name }}-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /  # Rewrites the URL path to root (/) when accessing the service.
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - http:
+  - host: {{ .Values.ingress.hosts[0].host }}
+    http:
       paths:
-      - path: /  # Specifies the path for which this Ingress rule applies.
-        pathType: Prefix  # The path type; Prefix matches all requests with this base path.
+      - path: {{ .Values.ingress.hosts[0].paths[0].path }}
+        pathType: {{ .Values.ingress.hosts[0].paths[0].pathType }}
         backend:
           service:
-            name: details-app-service  # The service to which the Ingress routes traffic.
+            name: {{ .Values.name }}-service
             port:
-              number: 8080  # The service port exposed by the details-app.
+              number: {{ .Values.service.port }}
